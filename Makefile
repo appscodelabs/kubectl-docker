@@ -46,6 +46,8 @@ manifest-version:
 manifest-release:
 	DOCKER_CLI_EXPERIMENTAL=enabled docker manifest create -a $(IMAGE):v$(RELEASE) $(foreach PLATFORM,$(DOCKER_PLATFORMS),$(IMAGE):$(VERSION)_$(subst /,_,$(PLATFORM)))
 	DOCKER_CLI_EXPERIMENTAL=enabled docker manifest push $(IMAGE):v$(RELEASE)
+	DOCKER_CLI_EXPERIMENTAL=enabled docker manifest create -a $(IMAGE):$(RELEASE) $(foreach PLATFORM,$(DOCKER_PLATFORMS),$(IMAGE):$(VERSION)_$(subst /,_,$(PLATFORM)))
+	DOCKER_CLI_EXPERIMENTAL=enabled docker manifest push $(IMAGE):$(RELEASE)
 
 .PHONY: docker-manifest
 docker-manifest: manifest-version manifest-release
