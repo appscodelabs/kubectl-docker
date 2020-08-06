@@ -14,5 +14,5 @@ RUN set -x \
 RUN set -x \
 	&& curl -fsSL https://dl.k8s.io/$VERSION/kubernetes-client-$OS-$ARCH.tar.gz | tar -zxv
 
-FROM gcr.io/distroless/base-debian10
+FROM busybox
 COPY --from=0 /kubernetes/client/bin/kubectl /usr/bin/kubectl
