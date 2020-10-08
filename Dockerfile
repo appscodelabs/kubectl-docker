@@ -1,5 +1,7 @@
 FROM debian
 
+LABEL org.opencontainers.image.source https://github.com/appscode/kubectl-docker
+
 ARG OS
 ARG ARCH
 ARG VERSION

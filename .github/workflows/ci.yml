@@ -41,8 +41,18 @@ jobs:
       - name: Available platforms
         run: echo ${{ steps.buildx.outputs.platforms }}
 
-      - name: Build
+      - name: Publish to GitHub Container Registry
         env:
+          REGISTRY: ghcr.io/appscode
+          DOCKER_TOKEN: ${{ secrets.LGTM_GITHUB_TOKEN }}
+          USERNAME: 1gtm
+        run: |
+          docker login ghcr.io --username ${USERNAME} --password ${DOCKER_TOKEN}
+          make release RELEASE=${{ matrix.k8s }}
+
+      - name: Publish to Docker Registry
+        env:
+          REGISTRY: appscode
           DOCKER_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
           USERNAME: 1gtm
         run: |
