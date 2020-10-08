@@ -18,6 +18,6 @@ RUN set -x \
 
 FROM busybox
 
-LABEL org.opencontainers.image.source https://github.com/appscode/kubectl-docker
+LABEL org.opencontainers.image.source https://github.com/appscodelabs/kubectl-docker
 
 COPY --from=0 /kubernetes/client/bin/kubectl /usr/bin/kubectl
