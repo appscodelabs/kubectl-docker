@@ -1,7 +1,7 @@
 FROM debian
 
-ARG OS
-ARG ARCH
+ARG TARGETOS
+ARG TARGETARCH
 ARG VERSION
 
 ENV DEBIAN_FRONTEND noninteractive
@@ -12,7 +12,7 @@ RUN set -x \
 	&& apt-get install -y --no-install-recommends apt-transport-https ca-certificates curl bzip2
 
 RUN set -x \
-	&& curl -fsSL https://dl.k8s.io/$VERSION/kubernetes-client-$OS-$ARCH.tar.gz | tar -zxv
+	&& curl -fsSL https://dl.k8s.io/$VERSION/kubernetes-client-${TARGETOS}-${TARGETARCH}.tar.gz | tar -zxv
 
 
 
