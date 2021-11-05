@@ -1,3 +1,18 @@
+FROM alpine
+
+ARG ARCH
+
+RUN set -x \
+	&& apk add --update ca-certificates curl zip
+
+RUN set -x \
+	&& curl -LO https://github.com/moparisthebest/static-curl/archive/refs/heads/master.zip \
+	&& unzip master.zip \
+	&& cd static-curl-master \
+	&& ./build.sh
+
+
+
 FROM debian
 
 ARG TARGETOS
@@ -20,4 +35,7 @@ FROM busybox
 
 LABEL org.opencontainers.image.source https://github.com/appscodelabs/kubectl-docker
 
-COPY --from=0 /kubernetes/client/bin/kubectl /usr/bin/kubectl
+ARG ARCH
+
+COPY --from=0 /tmp/release/curl-$ARCH /usr/bin/curl
+COPY --from=1 /kubernetes/client/bin/kubectl /usr/bin/kubectl

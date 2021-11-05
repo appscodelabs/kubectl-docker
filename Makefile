@@ -6,7 +6,8 @@ IMAGE      := $(REGISTRY)/$(BIN)
 RELEASE    ?= 1.20
 VERSION    ?= $(shell curl -fsSL https://storage.googleapis.com/kubernetes-release/release/stable-$(RELEASE).txt)
 
-DOCKER_PLATFORMS := linux/amd64 linux/386 linux/arm64 linux/ppc64le linux/s390x
+# DOCKER_PLATFORMS := linux/amd64 linux/386 linux/arm64 linux/ppc64le linux/s390x
+DOCKER_PLATFORMS := linux/aarch64
 PLATFORM         ?= $(firstword $(DOCKER_PLATFORMS))
 TAG              = $(VERSION)_$(subst /,_,$(PLATFORM))
 
@@ -26,7 +27,7 @@ all-push: $(addprefix push-, $(subst /,_,$(DOCKER_PLATFORMS)))
 
 container:
 	@echo "container: $(IMAGE):$(TAG)"
-	@docker buildx build --platform $(PLATFORM) --build-arg VERSION=$(VERSION) --load --pull -t $(IMAGE):$(TAG) -f Dockerfile .
+	@docker buildx build --platform $(PLATFORM) --build-arg ARCH=$(subst linux/,,$(PLATFORM)) --build-arg VERSION=$(VERSION) --load --pull -t $(IMAGE):$(TAG) -f Dockerfile .
 	@echo
 
 push: container
