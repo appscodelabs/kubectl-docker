@@ -5,6 +5,7 @@ BIN        := kubectl
 IMAGE      := $(REGISTRY)/$(BIN)
 RELEASE    ?= 1.20
 VERSION    ?= $(shell curl -fsSL https://storage.googleapis.com/kubernetes-release/release/stable-$(RELEASE).txt)
+SRC_REG    ?=
 
 # DOCKER_PLATFORMS := linux/amd64 linux/386 linux/arm64 linux/ppc64le linux/s390x
 DOCKER_PLATFORMS := linux/arm64
@@ -25,10 +26,17 @@ all-container: $(addprefix container-, $(subst /,_,$(DOCKER_PLATFORMS)))
 
 all-push: $(addprefix push-, $(subst /,_,$(DOCKER_PLATFORMS)))
 
+ifeq (,$(SRC_REG))
 container:
 	@echo "container: $(IMAGE):$(TAG)"
 	@docker buildx build --platform $(PLATFORM) --build-arg VERSION=$(VERSION) --load --pull -t $(IMAGE):$(TAG) -f Dockerfile .
 	@echo
+else
+container:
+	@echo "container: $(IMAGE):$(TAG)"
+	@docker tag $(SRC_REG)/$(BIN):$(TAG) $(IMAGE):$(TAG)
+	@echo
+endif
 
 push: container
 	@docker push $(IMAGE):$(TAG)
