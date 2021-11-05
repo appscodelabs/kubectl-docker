@@ -1,6 +1,6 @@
 FROM alpine
 
-ARG ARCH
+ARG TARGETARCH
 
 RUN set -x \
 	&& apk add --update ca-certificates curl zip
@@ -9,7 +9,7 @@ RUN set -x \
 	&& curl -LO https://github.com/moparisthebest/static-curl/archive/refs/heads/master.zip \
 	&& unzip master.zip \
 	&& cd static-curl-master \
-	&& ./build.sh
+	&& ARCH=${TARGETARCH} ./build.sh
 
 
 
@@ -35,7 +35,7 @@ FROM busybox
 
 LABEL org.opencontainers.image.source https://github.com/appscodelabs/kubectl-docker
 
-ARG ARCH
+ARG TARGETARCH
 
-COPY --from=0 /tmp/release/curl-$ARCH /usr/bin/curl
+COPY --from=0 /tmp/release/curl-$TARGETARCH /usr/bin/curl
 COPY --from=1 /kubernetes/client/bin/kubectl /usr/bin/kubectl
