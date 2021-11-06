@@ -38,4 +38,6 @@ LABEL org.opencontainers.image.source https://github.com/appscodelabs/kubectl-do
 ARG TARGETARCH
 
 COPY --from=0 /tmp/release/curl-$TARGETARCH /usr/bin/curl
+COPY --from=0 /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
+
 COPY --from=1 /kubernetes/client/bin/kubectl /usr/bin/kubectl
