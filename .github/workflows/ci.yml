@@ -9,6 +9,10 @@ on:
     # At 00:00 on Monday.
     - cron: "0 0 * * 1"
 
+  workflow_dispatch:
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
 jobs:
   build:
     name: Build
