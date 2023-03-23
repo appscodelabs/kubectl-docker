@@ -53,13 +53,3 @@ jobs:
         run: |
           docker login ghcr.io --username ${USERNAME} --password ${DOCKER_TOKEN}
           make release RELEASE=${{ matrix.k8s }}
-
-      - name: Publish to Docker Registry
-        env:
-          REGISTRY: appscode
-          SRC_REG: ghcr.io/appscode
-          DOCKER_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
-          USERNAME: 1gtm
-        run: |
-          docker login --username ${USERNAME} --password ${DOCKER_TOKEN}
-          make release RELEASE=${{ matrix.k8s }}
