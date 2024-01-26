@@ -28,11 +28,11 @@ jobs:
           # - "1.17"
           # - "1.18"
           # - "1.19"
-          # - "1.20"
-          # - "1.21"
-          # - "1.22"
-          # - "1.23"
-          # - "1.24"
+          - "1.20"
+          - "1.21"
+          - "1.22"
+          - "1.23"
+          - "1.24"
           - "1.25"
           - "1.26"
           - "1.27"
@@ -55,4 +55,7 @@ jobs:
           USERNAME: 1gtm
         run: |
           docker login ghcr.io --username ${USERNAME} --password ${DOCKER_TOKEN}
+          cd root
+          make release RELEASE=${{ matrix.k8s }}
+          cd ../nonroot
           make release RELEASE=${{ matrix.k8s }}
