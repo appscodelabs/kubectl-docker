@@ -14,7 +14,8 @@ RUN set -x \
 	&& ARCH=${TARGETARCH} ./build.sh
 
 RUN set -x \
-	&& curl -fsSL https://dl.k8s.io/$VERSION/kubernetes-client-${TARGETOS}-${TARGETARCH}.tar.gz | tar -zxv
+	&& curl -LO "https://dl.k8s.io/release/$VERSION/bin/${TARGETOS}/${TARGETARCH}/kubectl" \
+	&& chmod +x kubectl
 
 
 
@@ -26,4 +27,4 @@ ARG TARGETARCH
 
 COPY --from=0 /tmp/release/curl-$TARGETARCH /usr/bin/curl
 COPY --from=0 /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
-COPY --from=0 /kubernetes/client/bin/kubectl /usr/bin/kubectl
+COPY --from=0 /kubectl /usr/bin/kubectl
