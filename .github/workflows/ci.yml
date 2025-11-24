@@ -70,3 +70,5 @@ jobs:
           make release RELEASE=${{ matrix.k8s }}
           cd ../nonroot
           make release RELEASE=${{ matrix.k8s }}
+          cd ../ubi
+          make release RELEASE=${{ matrix.k8s }}
