@@ -60,3 +60,9 @@ docker-manifest: manifest-version manifest-release
 .PHONY: release
 release:
 	@$(MAKE) all-push docker-manifest --no-print-directory
+
+.PHONY: docker-certify-redhat
+docker-certify-redhat:
+	@preflight check container $(IMAGE):v$(RELEASE)-ubi \
+		--submit \
+		--certification-component-id=693fe748fb50161bb2a25330
