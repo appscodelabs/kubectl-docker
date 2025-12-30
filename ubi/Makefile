@@ -63,6 +63,6 @@ release:
 
 .PHONY: docker-certify-redhat
 docker-certify-redhat:
-	@preflight check container $(IMAGE):v$(RELEASE)-ubi \
+	@preflight check container $(IMAGE):$(RELEASE)-ubi \
 		--submit \
 		--certification-component-id=693fe748fb50161bb2a25330
