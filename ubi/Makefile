@@ -4,7 +4,7 @@ REGISTRY   ?= appscode
 BIN        := kubectl-nonroot
 IMAGE      := $(REGISTRY)/$(BIN)
 RELEASE    ?= 1.20
-VERSION    ?= $(shell curl -fsSL https://dl.k8s.io/release/stable-$(RELEASE).txt)-ubi
+VERSION    ?= $(shell curl -fsSL https://dl.k8s.io/release/stable-$(RELEASE).txt)
 SRC_REG    ?=
 
 DOCKER_PLATFORMS := linux/amd64 linux/arm64
